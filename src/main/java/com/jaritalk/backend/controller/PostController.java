@@ -3,6 +3,7 @@ package com.jaritalk.backend.controller;
 import com.jaritalk.backend.dto.PostDto;
 import com.jaritalk.backend.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,19 +22,19 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public void getPostDetail(@PathVariable(name = "postId") Long postId) {
-        postService.getPostDetail(postId);
+    public PostDto.PostDetailRes getPostDetail(@PathVariable(name = "postId") Long postId) {
+        return postService.getPostDetail(postId);
     }
 
     @GetMapping("")
-    public void getPostList(HttpServletRequest request, Pageable pageable) {
-        postService.getPostList(request, pageable);
+    public Page<PostDto.PostListRes> getPostList(HttpServletRequest request, Pageable pageable) {
+        return postService.getPostList(request, pageable);
     }
 
     @PatchMapping("/{postId}")
-    public void updatePost(HttpServletRequest request, @PathVariable(name = "postId") Long postId,
+    public Long updatePost(HttpServletRequest request, @PathVariable(name = "postId") Long postId,
                            @RequestBody PostDto.UpdatePostReq requestDto) {
-        postService.updatePost(request, postId, requestDto);
+        return postService.updatePost(request, postId, requestDto);
     }
 
     @DeleteMapping("/{postId}")

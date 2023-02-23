@@ -1,7 +1,9 @@
 package com.jaritalk.backend.controller;
 
+import com.jaritalk.backend.dto.HistoryDto;
 import com.jaritalk.backend.service.HistoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +18,13 @@ public class HistoryController {
     private final HistoryService historyService;
 
     @GetMapping("/postLike")
-    public void getPostLikeHistoryList(Pageable pageable, @RequestParam(name = "userId", required = false) Long userId) {
-        historyService.getPostLikeHistoryList(pageable, userId);
+    public Page<HistoryDto.PostLikeHistoryRes> getPostLikeHistoryList(Pageable pageable, @RequestParam(name = "userId", required = false) Long userId) {
+        return historyService.getPostLikeHistoryList(pageable, userId);
     }
 
     @GetMapping("/post")
-    public void getPostHistoryList(Pageable pageable) {
-        historyService.getPostHistoryList(pageable);
+    public Page<HistoryDto.PostHistoryRes> getPostHistoryList(Pageable pageable) {
+        return historyService.getPostHistoryList(pageable);
     }
 
 }
